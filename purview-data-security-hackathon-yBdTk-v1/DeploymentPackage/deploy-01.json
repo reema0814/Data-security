@@ -148,7 +148,7 @@
       "name": "[variables('storageAccountName')]",
       "location": "[resourceGroup().location]",
       "sku": {
-        "name": "Standard_LRS"
+        "name": "Standard_D2s_v5"
       },
       "kind": "StorageV2",
       "properties": {
