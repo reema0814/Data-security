@@ -48,6 +48,21 @@ function Invoke-ExternalCommand {
     return $process.ExitCode
 }
 
+function Get-AzureCliPath {
+    $candidates = @(
+        'C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd',
+        'C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin\az.cmd'
+    )
+
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) {
+            return $candidate
+        }
+    }
+
+    return 'az.cmd'
+}
+
 function Install-Chocolatey {
     if (Get-Command choco.exe -ErrorAction SilentlyContinue) {
         Write-Log 'Chocolatey already installed.'
@@ -129,8 +144,8 @@ function CreateCredFile {
     foreach ($file in @($txtPath, $ps1Path)) {
         $content = Get-Content -Path $file -Raw
         foreach ($key in $replacements.Keys) {
-            $content = $content -replace [Regex]::Escape("@@$key@@"), [string]$replacements[$key]
-            $content = $content -replace [Regex]::Escape("{{$key}}"), [string]$replacements[$key]
+            $content = $content -replace [Regex]::Escape("@@$key@@"), [string] $replacements[$key]
+            $content = $content -replace [Regex]::Escape("{{$key}}"), [string] $replacements[$key]
         }
         Set-Content -Path $file -Value $content -Encoding UTF8
     }
@@ -188,12 +203,12 @@ Your mission
 - Assess current Purview and Microsoft 365 readiness.
 - Implement Information Protection and DLP improvements.
 - Investigate Insider Risk activity and evidence.
-- Review DSPM for AI / exposure insights and remediate at least one issue.
+- Review DSPM and exposure insights and remediate at least one issue.
 - Produce a final incident and remediation narrative.
 
 Important notes
 - Some tenant features, alerts, cases, and licensing-dependent experiences are pre-staged by the CloudLabs team.
-- Azure resources in this deployment provide the learner workstation, helper content, exported evidence paths, and optional bootstrap data sources.
+- Azure resources in this deployment provide the learner workstation, helper content, evidence export paths, sample files, and optional governance seed data.
 - Perform tenant-bound tasks in the Microsoft Purview and Microsoft 365 portals, not through this VM unless instructed.
 '@
 
@@ -266,9 +281,9 @@ Do not share externally.
 Sensitive internal document used for insider risk investigation exercises.
 Includes behavioral indicators and exfiltration concerns for the simulated user timeline.
 '@
-        'AI-Exposure-Summary.txt' = @'
-Use this file to discuss oversharing and AI exposure scenarios.
-Documents broad-access SharePoint locations and sensitive content likely to be surfaced through AI-assisted experiences.
+        'Exposure-Review-Summary.txt' = @'
+Use this file to discuss oversharing and exposure scenarios.
+Documents broad-access SharePoint locations and sensitive content that should be reviewed during posture and investigation challenges.
 '@
     }
 
@@ -316,7 +331,7 @@ Challenge 3
 
 Challenge 4
 - DSPM / posture recommendation screenshot
-- AI-related exposure or oversharing evidence
+- Exposure or oversharing evidence
 - Remediation action proof
 
 Challenge 5/6/7
@@ -324,25 +339,8 @@ Challenge 5/6/7
 - Final narrative / Copilot outputs if used
 '@
 
-    $envTemplate = @"
-AZURE_USER_NAME=$AzureUserName
-AZURE_TENANT_ID=$AzureTenantID
-AZURE_SUBSCRIPTION_ID=$AzureSubscriptionID
-ODL_ID=$ODLID
-DEPLOYMENT_ID=$DeploymentID
-RESOURCE_GROUP=
-STORAGE_ACCOUNT=
-STORAGE_CONTAINER=governancedata
-STORAGE_CONNECTION_STRING=
-PURVIEW_PORTAL=https://purview.microsoft.com/
-COMPLIANCE_PORTAL=https://compliance.microsoft.com/
-SECURITY_PORTAL=https://security.microsoft.com/
-SECURITY_COPILOT_PORTAL=https://securitycopilot.microsoft.com/
-"@
-
     Set-Content -Path 'C:\LabFiles\Scripts\Open-Purview-Portals.ps1' -Value $openPortals -Encoding UTF8
     Set-Content -Path 'C:\LabFiles\Scripts\Evidence-Checklist.txt' -Value $captureChecklist -Encoding UTF8
-    Set-Content -Path 'C:\LabFiles\.env' -Value $envTemplate -Encoding UTF8
 }
 
 function Write-Bookmarks {
@@ -402,10 +400,7 @@ function Write-DesktopShortcuts {
 
 function Connect-AzureNonInteractive {
     Write-Log 'Authenticating to Azure CLI with CloudLabs user credentials.'
-    $azCmd = 'C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd'
-    if (-not (Test-Path $azCmd)) {
-        $azCmd = 'az.cmd'
-    }
+    $azCmd = Get-AzureCliPath
 
     & $azCmd cloud set --name AzureCloud | Out-Null
     & $azCmd login --username $AzureUserName --password $AzurePassword --tenant $AzureTenantID | Out-Null
@@ -420,47 +415,110 @@ function Connect-AzureNonInteractive {
 }
 
 function Resolve-ResourceGroup {
-    $azCmd = 'C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd'
+    $azCmd = Get-AzureCliPath
     $resourceGroup = (& $azCmd group list --query "[0].name" -o tsv).Trim()
     if (-not $resourceGroup) {
         Write-Log 'No resource group discovered from current subscription context.'
         return $null
     }
+
     Write-Log "Discovered resource group: $resourceGroup"
     return $resourceGroup
 }
 
-function Populate-EnvFromAzure {
+function Get-StorageResourceInfo {
     param([string] $ResourceGroupName)
 
-    $azCmd = 'C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin\az.cmd'
-    if (-not $ResourceGroupName) {
-        Write-Log 'Skipping Azure resource discovery because no resource group was found.'
+    $azCmd = Get-AzureCliPath
+    $storageAccount = (& $azCmd storage account list -g $ResourceGroupName --query "[0].name" -o tsv).Trim()
+    if (-not $storageAccount) {
+        Write-Log 'No storage account found in the resource group.'
+        return $null
+    }
+
+    $blobEndpoint = (& $azCmd storage account show -g $ResourceGroupName -n $storageAccount --query "primaryEndpoints.blob" -o tsv).Trim()
+    $connectionString = (& $azCmd storage account show-connection-string -g $ResourceGroupName -n $storageAccount --query connectionString -o tsv).Trim()
+
+    return @{
+        AccountName         = $storageAccount
+        BlobEndpoint        = $blobEndpoint
+        ConnectionString    = $connectionString
+        GovernanceContainer = 'governance-seed'
+        EvidenceContainer   = 'evidence-export'
+        ArtifactsContainer  = 'hackathon-artifacts'
+    }
+}
+
+function Ensure-StorageContent {
+    param([hashtable] $StorageInfo)
+
+    if (-not $StorageInfo) {
         return
     }
 
-    $storageAccount = (& $azCmd storage account list -g $ResourceGroupName --query "[0].name" -o tsv).Trim()
-    $connectionString = ''
+    $azCmd = Get-AzureCliPath
+    Write-Log "Ensuring storage containers exist in account: $($StorageInfo.AccountName)"
 
-    if ($storageAccount) {
-        Write-Log "Discovered storage account: $storageAccount"
-        & $azCmd storage container create --name governancedata --account-name $storageAccount --auth-mode login | Out-Null
-        $connectionString = (& $azCmd storage account show-connection-string -g $ResourceGroupName -n $storageAccount --query connectionString -o tsv).Trim()
-
-        $envLines = Get-Content -Path 'C:\LabFiles\.env'
-        $envLines = $envLines | ForEach-Object {
-            $_ -replace '^RESOURCE_GROUP=.*', "RESOURCE_GROUP=$ResourceGroupName" `
-               -replace '^STORAGE_ACCOUNT=.*', "STORAGE_ACCOUNT=$storageAccount" `
-               -replace '^STORAGE_CONNECTION_STRING=.*', "STORAGE_CONNECTION_STRING=$connectionString"
-        }
-        Set-Content -Path 'C:\LabFiles\.env' -Value $envLines -Encoding UTF8
-
-        Write-Log 'Uploading governance data samples to blob storage.'
-        & $azCmd storage blob upload-batch --auth-mode login --account-name $storageAccount --destination governancedata --source 'C:\LabFiles\GovernanceData' | Out-Null
+    foreach ($container in @($StorageInfo.GovernanceContainer, $StorageInfo.EvidenceContainer, $StorageInfo.ArtifactsContainer)) {
+        & $azCmd storage container create --name $container --account-name $StorageInfo.AccountName --auth-mode login | Out-Null
     }
-    else {
-        Write-Log 'No storage account found in the resource group.'
+
+    Write-Log 'Uploading governance data samples to blob storage.'
+    & $azCmd storage blob upload-batch --auth-mode login --account-name $StorageInfo.AccountName --destination $StorageInfo.GovernanceContainer --source 'C:\LabFiles\GovernanceData' --overwrite true | Out-Null
+
+    Write-Log 'Uploading sample files to blob storage artifacts container.'
+    & $azCmd storage blob upload-batch --auth-mode login --account-name $StorageInfo.AccountName --destination $StorageInfo.ArtifactsContainer --source 'C:\LabFiles\SampleFiles' --overwrite true | Out-Null
+}
+
+function Write-LabEnvFile {
+    param(
+        [string] $ResourceGroupName,
+        [hashtable] $StorageInfo
+    )
+
+    $envMap = [ordered]@{
+        AZURE_USER_NAME           = $AzureUserName
+        AZURE_TENANT_ID           = $AzureTenantID
+        AZURE_SUBSCRIPTION_ID     = $AzureSubscriptionID
+        ODL_ID                    = $ODLID
+        DEPLOYMENT_ID             = $DeploymentID
+        RESOURCE_GROUP            = $ResourceGroupName
+        STORAGE_ACCOUNT           = ''
+        STORAGE_BLOB_ENDPOINT     = ''
+        STORAGE_CONNECTION_STRING = ''
+        GOVERNANCE_CONTAINER      = 'governance-seed'
+        EVIDENCE_CONTAINER        = 'evidence-export'
+        ARTIFACTS_CONTAINER       = 'hackathon-artifacts'
+        LABFILES_ROOT             = 'C:\LabFiles'
+        SAMPLE_FILES_PATH         = 'C:\LabFiles\SampleFiles'
+        GOVERNANCE_DATA_PATH      = 'C:\LabFiles\GovernanceData'
+        EVIDENCE_PATH             = 'C:\LabFiles\Evidence'
+        EXPORTS_PATH              = 'C:\LabFiles\Exports'
+        REPORTS_PATH              = 'C:\LabFiles\Reports'
+        BOOKMARKS_FILE            = 'C:\LabFiles\Bookmarks\Purview-Hackathon-Bookmarks.html'
+        PURVIEW_PORTAL            = 'https://purview.microsoft.com/'
+        COMPLIANCE_PORTAL         = 'https://compliance.microsoft.com/'
+        SECURITY_PORTAL           = 'https://security.microsoft.com/'
+        SECURITY_COPILOT_PORTAL   = 'https://securitycopilot.microsoft.com/'
+        M365_ADMIN_PORTAL         = 'https://admin.microsoft.com/'
+        AZURE_PORTAL              = 'https://portal.azure.com/'
     }
+
+    if ($StorageInfo) {
+        $envMap.STORAGE_ACCOUNT = $StorageInfo.AccountName
+        $envMap.STORAGE_BLOB_ENDPOINT = $StorageInfo.BlobEndpoint
+        $envMap.STORAGE_CONNECTION_STRING = $StorageInfo.ConnectionString
+        $envMap.GOVERNANCE_CONTAINER = $StorageInfo.GovernanceContainer
+        $envMap.EVIDENCE_CONTAINER = $StorageInfo.EvidenceContainer
+        $envMap.ARTIFACTS_CONTAINER = $StorageInfo.ArtifactsContainer
+    }
+
+    $envContent = foreach ($key in $envMap.Keys) {
+        "$key=$($envMap[$key])"
+    }
+
+    Set-Content -Path 'C:\LabFiles\.env' -Value $envContent -Encoding UTF8
+    Copy-Item -Path 'C:\LabFiles\.env' -Destination 'C:\Users\Public\Desktop\.env' -Force
 }
 
 try {
@@ -476,7 +534,18 @@ try {
     Write-DesktopShortcuts
     Connect-AzureNonInteractive
     $resourceGroupName = Resolve-ResourceGroup
-    Populate-EnvFromAzure -ResourceGroupName $resourceGroupName
+
+    $storageInfo = $null
+
+    if ($resourceGroupName) {
+        $storageInfo = Get-StorageResourceInfo -ResourceGroupName $resourceGroupName
+        Ensure-StorageContent -StorageInfo $storageInfo
+    }
+    else {
+        Write-Log 'Skipping Azure resource discovery because no resource group was found.'
+    }
+
+    Write-LabEnvFile -ResourceGroupName $resourceGroupName -StorageInfo $storageInfo
     Write-Log 'Bootstrap completed successfully.'
 }
 catch {
