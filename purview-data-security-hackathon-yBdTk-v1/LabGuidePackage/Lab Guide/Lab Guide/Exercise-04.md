@@ -35,15 +35,6 @@ https://purview.microsoft.com
    - Password: <inject key="AzureAdUserPassword"></inject>
 
       ![](media/p1i3.png)
-
-4. When prompted, complete any first-run or multifactor prompts that are already pre-staged for the lab tenant.
-5. In a separate browser tab, open the Azure portal at 
-`
-https://portal.azure.com
-`
- and confirm that your subscription context is available for this deployment:
-   - Subscription: <inject key="SubscriptionID"></inject>
-   - Tenant: <inject key="TenantID"></inject>
    
 4. In the left navigation pane, select **Solutions (1)**.
 5. Open **DSPM (2)**.
@@ -66,7 +57,7 @@ https://portal.azure.com
 
    ![](media/p5t1s4.3.png)
 
-1. On the **DSPM > Posture** page, review the current posture summary and the **Top objectives to protect sensitive data** section, Identify the visible objective **Prevent oversharing of sensitive data (1)** and review the available remediation options, including **View remediation plan** and **View objective**, Scroll down to the **Data snapshot (2)** section and review the available posture insights for stale and fresh data, including any visible data exposure, labeling status, and exfiltration metrics
+1. On the **DSPM > Posture** page, review the current posture summary and the **Top objectives to protect sensitive data** section, Identify the visible objective **Prevent oversharing of sensitive data** and review the available remediation options, including **View remediation plan** and **View objective**, Scroll down to the **Data snapshot** section and review the available posture insights for stale and fresh data, including any visible data exposure, labeling status, and exfiltration metrics
 
    ![](media/p5t1s4.4.png)
 
@@ -159,7 +150,7 @@ In this task, you will create user segments to support restricted collaboration 
 
    ![](media/p5t3s3.2.png)
 
-1. Verify that the **Segment created** confirmation message is displayed, indicating that the **Finance-Segment** Information Barrier segment was created successfully, Click **Done (1)** to return to the **Segments** page and view the newly created segment.
+1. Verify that the **Segment created** confirmation message is displayed, indicating that the **Finance-Segment** Information Barrier segment was created successfully, Click **Done** to return to the **Segments** page and view the newly created segment.
 
    ![](media/p5t3s3.3.png)
 
@@ -175,7 +166,7 @@ In this task, you will create user segments to support restricted collaboration 
 
    ![](media/p5t3s3.6.png)
 
-1. On the **User group filter** page, click **Add (1)** to add a user attribute for the Research segment, From the list of available attributes, select **Department (2)** as the filter attribute for defining members of the Research segment.
+1. On the **User group filter** page, click **+ Add (1)** to add a user attribute for the Research segment, From the list of available attributes, select **Department (2)** as the filter attribute for defining members of the Research segment.
 
    ![](media/p5t3s3.7.png)
 
@@ -183,7 +174,7 @@ In this task, you will create user segments to support restricted collaboration 
 
    ![](media/p5t3s3.8.png)
 
-1. On the **Review your settings** page, verify that the segment name is **Research-Segment** and that the user group filter is configured as **department -eq 'Research'**, Click **Submit (3)** to create the **Research-Segment** Information Barrier segment.
+1. On the **Review your settings** page, verify that the segment name is **Research-Segment** and that the user group filter is configured as **department -eq 'Research'**, Click **Submit** to create the **Research-Segment** Information Barrier segment.
 
    ![](media/p5t3s3.9.png)
 
@@ -214,19 +205,19 @@ In this task, you will create a policy that blocks communication between the two
 
    ![](media/p5t4s2.0.png)
 
-1. On the **Add assigned segment details** page, click **Choose segment (1)** to select the segment that the policy will apply to, In the **Select assigned segment for this policy** pane, select **Finance-Segment (2)**, Click **Add (3)** to assign the **Finance-Segment** to the **Finance-Research-Block** Information Barrier policy.
+1. On the **Add assigned segment details** page, click **+ Choose segment (1)** to select the segment that the policy will apply to, In the **Select assigned segment for this policy** pane, select **Finance-Segment (2)**, Click **Add (3)** to assign the **Finance-Segment** to the **Finance-Research-Block** Information Barrier policy.
 
    ![](media/p5t4s2.1.png)
 
-1. Verify that **Finance-Segment (1)** is selected as the assigned segment for the policy, Click **Next (2)** to proceed to the **Communication and collaboration** configuration page.
+1. Verify that **Finance-Segment** is selected as the assigned segment for the policy, Click **Next** to proceed to the **Communication and collaboration** configuration page.
 
    ![](media/p5t4s2.2.png)
 
-1. On the **Configure communication and collaboration details** page, set **Communication and collaboration (1)** to **Blocked** to prevent communication between the selected segments.
+1. On the **Configure communication and collaboration details** page, set **Communication and collaboration** to **Blocked** to prevent communication between the selected segments.
 
    ![](media/p5t4s2.3.png)
 
-1. On the **Configure communication and collaboration details** page, click **Choose segment (1)** to select the segment that will be blocked from communicating with the assigned segment, In the **Select segments to allow or block** pane, select **Research-Segment (2)**, Click **Add (3)** to add the selected segment to the blocked communications list, After confirming the segment selection, click **Next (4)** to proceed to the **Policy status** configuration page.
+1. On the **Configure communication and collaboration details** page, click **+ Choose segment (1)** to select the segment that will be blocked from communicating with the assigned segment, In the **Select segments to allow or block** pane, select **Research-Segment (2)**, Click **Add (3)** to add the selected segment to the blocked communications list, After confirming the segment selection, click **Next (4)** to proceed to the **Policy status** configuration page.
 
    ![](media/p5t4s2.3.1.png)
 
@@ -258,7 +249,7 @@ In this task, you will create a policy that blocks communication between the two
 
    ![](media/p5t4s2.9.png)
 
-1. On the **Add assigned segment details** page, click **Choose segment (1)** to select the segment that the policy will be assigned to, In the **Select assigned segment for this policy** pane, select **Research-Segment (2)**, Click **Add (3)** to assign the **Research-Segment** to the **Research-Finance-Block** policy.
+1. On the **Add assigned segment details** page, click **+ Choose segment (1)** to select the segment that the policy will be assigned to, In the **Select assigned segment for this policy** pane, select **Research-Segment (2)**, Click **Add (3)** to assign the **Research-Segment** to the **Research-Finance-Block** policy.
 
    ![](media/p5t4s2.10.png)
 
@@ -270,7 +261,7 @@ In this task, you will create a policy that blocks communication between the two
 
    ![](media/p5t4s2.12.png)
 
-1. On the **Configure communication and collaboration details** page, click **Choose segment (1)** to select the segment that will be blocked from communicating with the assigned segment, In the **Select segments to allow or block** pane, select **Finance-Segment (2)**, Click **Add (3)** to add **Finance-Segment** to the blocked segments list, Verify that **Research-Segment** and **Finance-Segment** are configured as blocked segments, and then click **Next (4)** to proceed to the **Policy status** configuration page.
+1. On the **Configure communication and collaboration details** page, click **+ Choose segment (1)** to select the segment that will be blocked from communicating with the assigned segment, In the **Select segments to allow or block** pane, select **Finance-Segment (2)**, Click **Add (3)** to add **Finance-Segment** to the blocked segments list, Verify that **Research-Segment** and **Finance-Segment** are configured as blocked segments, and then click **Next (4)** to proceed to the **Policy status** configuration page.
 
    ![](media/p5t4s2.13.png)
 
@@ -293,8 +284,8 @@ In this task, you will create a policy that blocks communication between the two
    ![](media/p5t4s2.16.png)
 
 1. On the **Policies** page, verify that both Information Barrier policies are listed:
-   - **Research-Finance-Block (1)**
-   - **Finance-Research-Block (2)**
+   - **Research-Finance-Block**
+   - **Finance-Research-Block**
 
    Confirm that the **Status** of both policies is **Active**, indicating that communication restrictions between the Finance and Research segments have been successfully applied.
 

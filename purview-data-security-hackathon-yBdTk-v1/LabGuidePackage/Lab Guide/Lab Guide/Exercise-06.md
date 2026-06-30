@@ -36,15 +36,6 @@ https://purview.microsoft.com
    - Password: <inject key="AzureAdUserPassword"></inject>
 
       ![](media/p1i3.png)
-
-4. When prompted, complete any first-run or multifactor prompts that are already pre-staged for the lab tenant.
-5. In a separate browser tab, open the Azure portal at 
-`
-https://portal.azure.com
-`
- and confirm that your subscription context is available for this deployment:
-   - Subscription: <inject key="SubscriptionID"></inject>
-   - Tenant: <inject key="TenantID"></inject>
    
 5. In the Microsoft Purview portal, click **Solutions (1)** from the left navigation pane to open the list of available data governance and compliance solutions, Select **Data Map (2)** to access the organization's data estate and governance resources, select **Unified Catalog (3)** to open the centralized catalog experience and review available data assets, business concepts, glossary terms, and governance information.
 
@@ -85,7 +76,7 @@ In this task, you will inspect the Microsoft Purview Data Map and confirm that d
 
 In this task, you will build a collection hierarchy that aligns to a business domain so governance responsibilities can be scoped more clearly.
 
-1. In **Data Map (1)**, select **Domains (2)** from the left navigation pane to review the available governance domains and collections, Click **New collection (3)** to create a new collection within the selected domain and organize governance assets by business function or department.
+1. In **Data Map (1)**, select **Domains (2)** from the left navigation pane to review the available governance domains and collections, Click **+ New collection (3)** to create a new collection within the selected domain and organize governance assets by business function or department.
 
    ![](media/p7t3s1.png)
 
@@ -93,7 +84,7 @@ In this task, you will build a collection hierarchy that aligns to a business do
 
    ![](media/p7t3s1.0.png)
 
-1. On the **Domains** page, verify that the **Finance (1)** collection is listed under the selected domain, confirming that the collection was created successfully, Click **New collection (2)** to create a new child collection
+1. On the **Domains** page, verify that the **Finance (1)** collection is listed under the selected domain, confirming that the collection was created successfully, Click **+ New collection (2)** to create a new child collection
 
    ![](media/p7t3s1.1.png)
 
@@ -101,7 +92,7 @@ In this task, you will build a collection hierarchy that aligns to a business do
 
    ![](media/p7t3s1.1.0.png)
 
-1. On the **Domains** page, verify that the **Finance-Sensitive (1)** collection is listed under the **Finance** collection, confirming that the child collection was created successfully, 
+1. On the **Domains** page, verify that the **Finance-Sensitive** collection is listed under the **Finance** collection, confirming that the child collection was created successfully, 
 Review the **Collection path** and confirm that the hierarchy displays **Finance → Finance-Sensitive**, indicating that the collection structure is configured correctly.
 
    ![](media/p7t3s1.2.png)
@@ -206,9 +197,9 @@ In the **Description (2)** field, enter a description explaining that the term r
 
    ![](media/p7t5s1.7.png)
 
-1. On the **Regulated Financial Record** glossary term page, review the glossary term details and verify that the **Status** is currently displayed as **Draft**, Verify that **ODL_User (1)** is listed as the **Owner** of the glossary term and that the glossary term belongs to the **Finance** governance domain.
+1. On the **Regulated Financial Record** glossary term page, review the glossary term details and verify that the **Status** is currently displayed as **Draft**, Verify that **ODL_User** is listed as the **Owner** of the glossary term and that the glossary term belongs to the **Finance** governance domain.
 
-1. Click **Publish (2)** to publish the **Regulated Financial Record** glossary term and make it available for use across the Unified Catalog.
+1. Click **Publish** to publish the **Regulated Financial Record** glossary term and make it available for use across the Unified Catalog.
 
    ![](media/p7t5s1.8.png)
 
@@ -244,6 +235,8 @@ In this task, you will connect business context to scanned assets and review gov
 
 1. In **Unified Catalog (1)**, expand **Health management (2)** and select **Reports (3)** to review the available governance and catalog reporting options.
 
+   ![](media/p7t6s1.3.png)
+   
 1. Review the **Reports** dashboard and verify that the available reports are listed, including:
    - **Classic assets**
    - **Classic catalog adoption**
@@ -255,8 +248,6 @@ In this task, you will connect business context to scanned assets and review gov
    - **DQ health report**
 
    Verify that the reports show an **Active** status, indicating that they are available for reporting and governance analysis.
-
-   ![](media/p7t6s1.3.png)
 
 > [!Tip]
 > If your environment does not permit editing the asset, capture evidence that the asset can still be found in Unified Catalog and explain which missing role would be needed to attach the glossary term.

@@ -36,15 +36,6 @@ https://purview.microsoft.com
    - Password: <inject key="AzureAdUserPassword"></inject>
 
       ![](media/p1i3.png)
-
-4. When prompted, complete any first-run or multifactor prompts that are already pre-staged for the lab tenant.
-5. In a separate browser tab, open the Azure portal at 
-`
-https://portal.azure.com
-`
- and confirm that your subscription context is available for this deployment:
-   - Subscription: <inject key="SubscriptionID"></inject>
-   - Tenant: <inject key="TenantID"></inject>
    
 6. In the Microsoft Purview portal, click **Solutions (1)** to view the available compliance and governance solutions.
 
@@ -57,8 +48,6 @@ https://portal.azure.com
    - **Compliance Manager (7)**
 
       ![](media/p6t1s6.png)
-7. Record the deployment reference for your notes as **Deployment ID: <inject key="DeploymentID" enableCopy="false"></inject>**.
-8. Create a plain-text evidence note on the desktop or in your challenge notes listing which Purview solutions are visible and which appear pre-staged by the tenant team.
 
 > [!Important]
 > Some Purview experiences depend on licensing, role groups, and pre-enabled prerequisites. If a feature is visible but opens in read-only mode, continue with observation and evidence capture rather than blocking your progress.
@@ -73,7 +62,7 @@ In this task, you will use Microsoft Purview Audit to confirm that searchable ac
 
 2. If the page prompts you to start recording user and admin activity, note the prompt for your evidence and continue only if the tenant is already configured for the challenge.
 
-3. In **Audit**, Click **Search (1)** to run an audit log search using the specified criteria and retrieve matching audit events.
+3. In **Audit**, Click **Search** to run an audit log search using the specified criteria and retrieve matching audit events.
 
    ![](media/p6t2s3.png)
 
@@ -185,7 +174,7 @@ In this task, you will create baseline retention protection and a records-orient
 
    ![](media/p6t4s6.png)
 
-7. In **Records Management**, select **File plan (1)** from the left navigation pane, click **Create a label (2)** to start creating a new retention label for managing records and retention settings.
+7. In **Records Management**, select **File plan (1)** from the left navigation pane, click **+ Create a label (2)** to start creating a new retention label for managing records and retention settings.
 
    ![](media/p6t4s7.png)
 
@@ -267,7 +256,7 @@ In this task, you will create an investigation workspace that can preserve and s
 
       ![](media/p6t5s2.3.png)
 
-1. In the **Data sources** section, click **Add tenant-wide sources (1)** to include content from across the Microsoft 365 tenant in the investigation search.
+1. In the **Data sources** section, click **Add tenant-wide sources** to include content from across the Microsoft 365 tenant in the investigation search.
 
    ![](media/p6t5s2.4.png)
 
@@ -280,12 +269,11 @@ Click **Save** to apply the selected data sources to the **Incident Content Sear
 
 1. Confirm that the keyword query contains **confidential**, **finance**, and **project** in the **Condition builder** section.
 
-1. Click **Run query (1)** to execute the **Incident Content Search** across the selected tenant-wide data sources.
-
+1. Click **Run query** to execute the **Incident Content Search** across the selected tenant-wide data sources.
 
    ![](media/p6t5s2.6.png)
 
-1. In the **Choose search results** pane, keep **Statistics** selected to generate a summary of the search results and matching content, Click **Run query (2)** to execute the **Incident Content Search** and generate search statistics across all selected tenant-wide sources.
+1. In the **Choose search results** pane, keep **Statistics** selected to generate a summary of the search results and matching content, Click **Run query** to execute the **Incident Content Search** and generate search statistics across all selected tenant-wide sources.
 
    ![](media/p6t5s2.7.png)
 
@@ -297,7 +285,7 @@ Click **Save** to apply the selected data sources to the **Incident Content Sear
 
    ![](media/p6t5s2.9.png)
 
-1. On the **Incident Evidence Hold** page, click **Add sources (1)** to select the Microsoft 365 locations whose content must be preserved as part of the investigation hold.
+1. On the **Incident Evidence Hold** page, click **Add sources** to select the Microsoft 365 locations whose content must be preserved as part of the investigation hold.
 
    ![](media/p6t5s2.10.png)
 

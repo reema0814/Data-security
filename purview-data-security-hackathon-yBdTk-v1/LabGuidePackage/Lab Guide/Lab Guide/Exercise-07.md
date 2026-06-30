@@ -35,15 +35,6 @@ https://purview.microsoft.com
    - Password: <inject key="AzureAdUserPassword"></inject>
 
       ![](media/p1i3.png)
-
-4. When prompted, complete any first-run or multifactor prompts that are already pre-staged for the lab tenant.
-5. In a separate browser tab, open the Azure portal at 
-`
-https://portal.azure.com
-`
- and confirm that your subscription context is available for this deployment:
-   - Subscription: <inject key="SubscriptionID"></inject>
-   - Tenant: <inject key="TenantID"></inject>
    
 3. Open a new browser tab and go to [Microsoft Security Copilot](https://securitycopilot.microsoft.com/).
 

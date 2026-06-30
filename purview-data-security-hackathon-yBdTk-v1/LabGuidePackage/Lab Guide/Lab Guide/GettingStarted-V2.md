@@ -109,9 +109,6 @@ https://portal.azure.com
 
 1. If a **Welcome to Microsoft Azure** popup window appears, select **Maybe Later** to skip the tour.
 
-4. Confirm that your Azure subscription is available:
-   - Subscription: <inject key="SubscriptionID"></inject>
-   - Tenant: <inject key="TenantID"></inject>
 5. In a new browser tab, open the Microsoft Purview portal at 
 `
 https://purview.microsoft.com
