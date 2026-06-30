@@ -40,10 +40,6 @@ and sign in with:
    `
    https://purview.microsoft.com
    `
-4. If prompted to select a tenant or account, confirm that you are working in the tenant associated with:
-   - Tenant ID: <inject key="TenantID"></inject>
-   - Subscription ID: <inject key="SubscriptionID"></inject>
-5. Record your deployment reference for screenshots and evidence collection as **Deployment ID: <inject key="DeploymentID" enableCopy="false"></inject>**.
 6. In the Microsoft Purview portal, select **Solutions (1)** > **Information Protection (2)**.
 
    ![](media/p2t1s6.png)
