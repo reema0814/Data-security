@@ -33,18 +33,93 @@ By the end of this hackathon, you should be able to:
 - Capture screenshots, reports, findings, and case evidence as you progress.
 - Complete the 7 challenge flow from control implementation through investigation and remediation storytelling.
 
+## Architecture
+
+The lab combines Azure-hosted support assets with tenant-based Microsoft Purview work.
+
+```mermaid
+flowchart LR
+    A[Participant] --> B[Lab VM]
+    B --> C[Azure Portal]
+    B --> D[Microsoft Purview Portal]
+    C --> E[Hackathon Resource Group]
+    E --> F[Supporting Assets]
+    E --> G[Sample Data Sources]
+    D --> H[Information Protection]
+    D --> I[DLP]
+    D --> J[Insider Risk]
+    D --> K[DSPM for AI]
+    D --> L[Compliance and Governance]
+    J --> M[Investigation Evidence]
+    K --> M
+    I --> M
+    H --> M
+    M --> N[Final Remediation Narrative]
+```
+## Getting Started with Lab
+Once you're ready to dive in, your virtual machine and **Guide** will be right at your fingertips within your web browser.
+
+   ![](media/g.png)
+
+## Lab Guide Zoom In/Zoom Out
+
+To adjust the zoom level for the environment page, click the **A↕ : 100%** icon located next to the timer in the lab environment.
+
+   ![](media/gi.png)
+
+## Virtual Machine & Lab Guide
+Your virtual machine is your workhorse throughout the workshop. The guide is your roadmap to success.
+
+## Exploring Your Lab Resources
+To get a better understanding of your lab resources and credentials, navigate to the **Environment** tab.
+
+![](media/gs1.1.png)
+
+## Utilizing the Split Window Feature
+For convenience, you can open the lab guide in a separate window by selecting the **Split Window** button from the top right corner.
+
+![](media/gs1.2.png)
+
+## Managing Your Virtual Machine
+Feel free to **start, restart, or stop (2)** your virtual machine as needed from the **Resources (1)** tab. Your experience is in your hands!
+
+   ![](media/gr.png)
+
 ## Sign-in and Lab Access
 
-1. Sign in to the lab VM if directed by your facilitator.
-2. Open a browser and go to <https://portal.azure.com>.
-3. Sign in with the following credentials:
-   - Username: `<inject key="AzureAdUserEmail"></inject>`
-   - Password: `<inject key="AzureAdUserPassword"></inject>`
+1. On your virtual machine, click on the **Azure Portal** icon.
+
+    ![](media/p1i1.png)
+2. Open a browser and go to 
+`
+https://portal.azure.com
+`
+3. On the **Sign in to Microsoft Azure** tab you will see the login screen, in that enter the following email/username, and click on **Next (2)**.
+   - Username: <inject key="AzureAdUserEmail"></inject>
+
+      ![](media/p1i2.png)
+
+   - Password: <inject key="AzureAdUserPassword"></inject>
+
+      ![](media/p1i3.png)
+
+1. If you see the pop-up **Stay Signed in?**, select **No**.
+
+   ![](media/p1i4.png)
+
+1. If a **Welcome to Microsoft Azure** popup window appears, select **Maybe Later** to skip the tour.
+
 4. Confirm that your Azure subscription is available:
-   - Subscription: `<inject key="SubscriptionID"></inject>`
-   - Tenant: `<inject key="TenantID"></inject>`
-5. In a new browser tab, open the Microsoft Purview portal at <https://purview.microsoft.com>.
+   - Subscription: <inject key="SubscriptionID"></inject>
+   - Tenant: <inject key="TenantID"></inject>
+5. In a new browser tab, open the Microsoft Purview portal at 
+`
+https://purview.microsoft.com
+`
 6. If a welcome screen appears, select **Get started** to enter the unified Microsoft Purview portal home page.
+
+   ![](media/p1i6.png)
+   
 7. Record your deployment reference for screenshots, evidence notes, and any facilitator check-ins: **Deployment ID: <inject key="DeploymentID" enableCopy="false"></inject>**
 
 > [!Tip]
@@ -135,7 +210,10 @@ Consolidate findings into a final incident and remediation narrative. Where enab
 
 Microsoft Learn states that the unified Microsoft Purview portal provides a single home page, solution cards, centralized settings, and solution-specific left navigation. As you work through the challenges, use this pattern:
 
-1. Start at <https://purview.microsoft.com>.
+1. Start at 
+`
+https://purview.microsoft.com
+`
 2. From the home page, open a solution card directly, or select **View all solutions**.
 3. Use the **Data Security**, **Risk & Compliance**, or **Data Governance** areas to locate the service needed for the current challenge.
 4. After opening a solution, use the left navigation to move between its **Home**, policies, reports, explorers, settings, and related pages.
@@ -150,30 +228,6 @@ n- Data Loss Prevention
 - Information Barriers
 - Audit, eDiscovery, Records Management, or related compliance areas
 - Unified Catalog or Data Map references where governance tasks are in scope
-
-## Architecture
-
-The lab combines Azure-hosted support assets with tenant-based Microsoft Purview work.
-
-```mermaid
-flowchart LR
-    A[Participant] --> B[Lab VM]
-    B --> C[Azure Portal]
-    B --> D[Microsoft Purview Portal]
-    C --> E[Hackathon Resource Group]
-    E --> F[Supporting Assets]
-    E --> G[Sample Data Sources]
-    D --> H[Information Protection]
-    D --> I[DLP]
-    D --> J[Insider Risk]
-    D --> K[DSPM for AI]
-    D --> L[Compliance and Governance]
-    J --> M[Investigation Evidence]
-    K --> M
-    I --> M
-    H --> M
-    M --> N[Final Remediation Narrative]
-```
 
 ## Components Explained
 

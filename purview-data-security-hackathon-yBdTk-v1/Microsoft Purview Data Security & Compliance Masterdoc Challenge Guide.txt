@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "[Test]: Microsoft Purview Data Security & Compliance - Attendee Guide",
+    "Language": "English",
+    "BaseURL": "https://github.com/reema0814/Data-security",
+    "Files": [
+       {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Getting-Started%20Challenge.md",
+        "Order": 1
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%201.md",
+        "Order": 2
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%202.md",
+        "Order": 3
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%203.md",
+        "Order": 4
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%204.md",
+        "Order": 5
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%205.md",
+        "Order": 6
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%206.md",
+        "Order": 7
+      },
+      {
+        "RawFilePath": "https://raw.githubusercontent.com/varshabv-spektra/Data-security/refs/heads/main/purview-data-security-hackathon-yBdTk-v1/LabGuidePackage/Lab%20Guide/Challenge%20guide/Challenge%207.md",
+        "Order": 8
+      }
+
+    ]
+  }
+]
