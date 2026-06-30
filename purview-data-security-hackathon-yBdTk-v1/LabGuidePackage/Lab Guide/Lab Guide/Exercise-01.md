@@ -54,9 +54,6 @@ and sign in with:
 
       ![](media/p2t1s7.png)
 
-> [!Tip]
-> Save screenshots in your evidence folder using filenames that include your deployment identifier so they can be correlated later during the investigation and remediation summary.
-
 ## Task 2: Create the sensitivity label taxonomy
 
 In this task, you will create a label taxonomy with four labels and two sublabels under Confidential.
@@ -144,7 +141,7 @@ In this task, you will create a label taxonomy with four labels and two sublabel
 
 7. Click **Cancel** to return to the **Sensitivity labels** page.
 
-7. Select the **Confidential (1)** label, and choose **Create sublabel (2)**.
+7. Select the **Confidential (1)** label, and choose **+ Create sublabel (2)**.
 
    ![](media/p2t2s7.0.png)
 
@@ -152,6 +149,7 @@ In this task, you will create a label taxonomy with four labels and two sublabel
    - **Name**: `Finance (1)`
    - **Display name**: `Finance (2)`
    - **Description for users**: `Use for sensitive financial and payment-related content. (3)`
+   - Click **Next (4)**.
 
       ![](media/p2t2s8.png)
 
@@ -168,7 +166,7 @@ In this task, you will create a label taxonomy with four labels and two sublabel
 
 7. Click **Cancel** to return to the **Sensitivity labels** page.
 
-8. Select the **Confidential (1)** label, and choose **Create sublabel (2)**
+8. Select the **Confidential (1)** label, and choose **+ Create sublabel (2)**
 
    ![](media/p2t2s9.png)
 
@@ -176,6 +174,7 @@ In this task, you will create a label taxonomy with four labels and two sublabel
    - **Name**: `Legal (1)`
    - **Display name**: `Legal (2)`
    - **Description for users**: `Use for contracts, legal advice, and privileged legal content. (3)`
+   - Click **Next (4)**.
 
       ![](media/p2t2s9.0.png)
 
@@ -303,7 +302,7 @@ In this task, you will publish the labels through a label policy so users and se
 
 In this task, you will create an auto-labeling policy that applies a sensitivity label when sensitive information is detected.
 
-1. In the Microsoft Purview portal, go to **Solutions** > **Information Protection** > **Policies** > **Auto-labeling policies**.
+1. In the Microsoft Purview portal, go to **Solutions** > **Information Protection (1)** > **Policies** > **Auto-labeling policies (2)**.
 
    ![](media/p2t5s1.png)
 
@@ -319,7 +318,7 @@ In this task, you will create an auto-labeling policy that applies a sensitivity
 
    ![](media/p2t5s3.0.png)
 
-5. Click **Choose a label (1)**, select **Confidential/Finance (2)** from the list of available sensitivity labels, and then click **Add (3)**.
+5. Click **+ Choose a label (1)**, select **Confidential/Finance (2)** from the list of available sensitivity labels, and then click **Add (3)**.
 
    ![](media/p2t5s3.1.png)
 
@@ -327,11 +326,11 @@ In this task, you will create an auto-labeling policy that applies a sensitivity
 
    ![](media/p2t5s3.2.png)
 
-3. For locations, include at least **SharePoint sites (2)** and **OneDrive accounts (3)**. If **Exchange mail (1)** is available and pre-staged for this challenge, you may include it as well.Then click **Next (4)**.
+3. For locations, include at least **SharePoint sites (1)** and **OneDrive accounts (2)**. If **Exchange mail** is available and pre-staged for this challenge, you may include it as well.Then click **Next (3)**.
 
    ![](media/p2t5s3.3.png)
 
-4. In the **Name (1)** field, enter **Financial Data Detection**, click **Add condition (2)**, and then select **Content contains (3)** to create a condition that detects sensitive financial information
+4. In the **Name** field, enter **Financial Data Detection (1)**, click **Add condition (2)**, and then select **Content contains (3)** to create a condition that detects sensitive financial information
 
    ![](media/p2t5s3.4.png)
 
