@@ -1,14 +1,3 @@
-# Challenge Guide: Microsoft Purview Data Security
-
-> **Environment Reference**
-> - Username: <inject key="AzureAdUserEmail"></inject>
-> - Password: <inject key="AzureAdUserPassword"></inject>
-> - Tenant ID: <inject key="TenantID"></inject>
-> - Subscription ID: <inject key="SubscriptionID"></inject>
-> - Deployment ID: <inject key="DeploymentID" enableCopy="false"></inject>
-
----
-
 # Challenge 01: Information Protection & Classification
 
 **Estimated Duration:** 1 hour 15 minutes
